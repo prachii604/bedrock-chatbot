@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  build:
+    commands:
+      - echo "Deploying frontend to S3..."
+      - aws s3 cp ./frontend s3://your-s3-bucket-name/ --recursive
+      - echo "Updating Lambda..."
+      - zip function.zip ./backend/lambda_function.py
+      - aws lambda update-function-code --function-name your-lambda-function-name --zip-file fileb://function.zip
